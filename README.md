@@ -1,6 +1,40 @@
 # MajinBu — AI Food Inspiration
 
-Sistem AI Food Inspiration berbasis prompt. User memasukkan preferensi makanan, AI memberikan kandidat makanan Indonesia lengkap dengan gambar, detail, resep cara membuat, dan video tutorial.
+## Tentang Aplikasi
+
+**MajinBu** adalah aplikasi web berbasis kecerdasan buatan yang dirancang untuk membantu pengguna menemukan inspirasi kuliner Indonesia. Aplikasi ini dibuat untuk menjawab masalah umum yang sering dialami banyak orang: **"bingung mau makan apa."**
+
+### Tujuan
+
+Tujuan utama pengembangan MajinBu adalah:
+
+1. **Memberikan rekomendasi makanan yang relevan** — Pengguna cukup menuliskan preferensi dalam bahasa sehari-hari (misal: *"makanan pedas gurih yang enak saat hujan"*), dan AI akan menganalisis serta memberikan kandidat makanan Indonesia yang sesuai.
+
+2. **Menyajikan informasi lengkap** — Tidak sekedar nama makanan, tetapi juga deskripsi detail, karakter rasa, bahan-bahan, resep langkah demi langkah, dan video tutorial — semuanya digenerate otomatis oleh AI.
+
+3. **Memperkenalkan kuliner Nusantara** — Dengan basis pengetahuan AI, aplikasi dapat merekomendasikan makanan dari berbagai daerah di Indonesia, dari yang populer hingga yang unik dan mungkin belum dikenal pengguna.
+
+### Latar Belakang Pembuatan
+
+Project ini berawal dari ide untuk menggabungkan kekuatan AI generatif dengan kebutuhan sehari-hari. Alih-alih membuat aplikasi AI yang kompleks dan abstrak, MajinBu fokus pada satu use case yang sederhana namun bernilai: **membantu orang memutuskan dan memasak makanan.**
+
+Proses pengembangan dilakukan secara iteratif dengan pendekatan MVP (Minimum Viable Product):
+- Dimulai dari sistem rekomendasi makanan berbasis lokasi
+- Kemudian dipivot menjadi AI Food Inspiration tanpa lokasi setelah pertimbangan biaya API dan kompleksitas data
+- Fitur dikembangkan bertahap: kandidat makanan → gambar → detail & resep → video tutorial
+
+### Yang Dapat Dilakukan Aplikasi
+
+- **Input bebas** — Pengguna menulis preferensi makanan dalam bentuk teks bebas (prompt)
+- **Rekomendasi AI** — Sistem memanggil AI untuk mendapatkan 3 kandidat makanan Indonesia yang cocok
+- **Gambar otomatis** — Setiap kandidat dilengkapi gambar dari Pexels
+- **Detail & resep lengkap** — Setelah memilih, AI memberikan deskripsi, rasa, bahan, dan langkah memasak
+- **Video tutorial** — Sistem mengenerate video masak via PixVerse
+- **Caching cerdas** — Data yang sudah pernah diminta akan disimpan di database dan bisa dipakai ulang
+
+### Teknologi Utama
+
+Aplikasi dibangun dengan **Next.js 15** (App Router) dan **TypeScript** sebagai fondasi utama. **PostgreSQL** dengan **Prisma ORM** digunakan untuk penyimpanan data. Sistem AI menggunakan **adapter OpenAI-compatible** yang fleksibel — bisa menggunakan Gemini, OpenAI, DeepSeek, Anthropic, atau model self-hosted. Gambar diperoleh dari **Pexels API**, sementara video digenerate melalui **PixVerse CLI**.
 
 ## Use Case
 
