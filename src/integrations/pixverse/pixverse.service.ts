@@ -52,14 +52,24 @@ function mapStatus(cliStatus: string): "PENDING" | "PROCESSING" | "COMPLETED" | 
   return "PENDING";
 }
 
+function getVideoDurationSeconds(): number {
+  const raw = process.env.PIXVERSE_VIDEO_DURATION ?? "8";
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed)) return 8;
+  const seconds = Math.floor(parsed);
+  if (seconds <= 0) return 8;
+  return seconds;
+}
+
 export async function createVideoJob(
   prompt: string
 ): Promise<{ jobId: string }> {
-  logger.info("Creating PixVerse video job via CLI", { prompt });
+  const durationSeconds = getVideoDurationSeconds();
+  logger.info("Creating PixVerse video job via CLI", { prompt, durationSeconds });
 
   const escapedPrompt = prompt.replace(/"/g, '\\"');
   const raw = runCLI(
-    `create video --prompt "${escapedPrompt}" --duration 4 --aspect-ratio 16:9 --no-wait --json`
+    `create video --prompt "${escapedPrompt}" --duration ${durationSeconds} --aspect-ratio 16:9 --no-wait --json`
   );
 
   const result = parseJSON<CLICreateResult>(raw);
