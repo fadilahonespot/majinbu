@@ -2,6 +2,30 @@
 
 Sistem AI Food Inspiration berbasis prompt. User memasukkan preferensi makanan, AI memberikan kandidat makanan Indonesia lengkap dengan gambar, detail, resep cara membuat, dan video tutorial.
 
+## Use Case
+
+| Skenario | Contoh Prompt | Output |
+|----------|--------------|--------|
+| **Mencari ide masakan** | *"makanan pedas gurih yang enak dimakan saat hujan"* | Seblak, Mie Ayam Bakso Pedas, Ayam Geprek |
+| **Inspirasi bekal** | *"makanan praktis untuk bekal kantor"* | Nasi Goreng, Tumis Kangkung, Ayam Teriyaki |
+| **Masakan rumahan** | *"masakan berkuah segar untuk buka puasa"* | Soto Ayam, Sop Buntut, Sayur Asem |
+| **Camilan** | *"jajanan tradisional manis legit"* | Klepon, Pisang Goreng, Kue Cubit |
+| **Mencoba hal baru** | *"makanan khas Sulawesi yang unik"* | Coto Makassar, Konro, Pallubasa |
+
+## Show Case
+
+Project ini mendemonstrasikan:
+
+1. **Multi-AI Integration** — Tidak terikat satu provider AI. Sistem menggunakan adapter OpenAI-compatible yang bisa dipasangkan dengan Gemini, OpenAI, DeepSeek, Anthropic, atau model self-hosted cukup dengan mengganti 3 environment variable.
+
+2. **Async Video Pipeline** — Video generation berjalan asynchronous. Backend memulai job, frontend polling status tiap 4 detik, dan video ditampilkan begitu selesai — tanpa blocking user experience.
+
+3. **Smart Caching** — Detail makanan dan video di-cache berdasarkan hash dari prompt + nama makanan. Request yang sama di masa depan akan langsung mengambil dari database tanpa perlu memanggil AI lagi.
+
+4. **Resilient Architecture** — Retry otomatis dengan exponential backoff untuk HTTP errors, rate limiting per-IP, image proxy untuk CORS bypass, dan logging bertingkat untuk debugging.
+
+5. **CLI Integration** — PixVerse diakses via command line interface (bukan HTTP API), menunjukkan fleksibilitas arsitektur dalam mengintegrasikan tools eksternal.
+
 ## Tech Stack
 
 - **Frontend & Backend**: Next.js 15 (App Router)
