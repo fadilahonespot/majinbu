@@ -1,0 +1,2 @@
+# Placeholder for food images
+# Add your placeholder image here: placeholder-food.png

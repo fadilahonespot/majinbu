@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model FoodRequest {
+  id        String   @id @default(cuid())
+  prompt    String
+  promptHash String
+  createdAt DateTime @default(now())
+
+  candidates FoodCandidate[]
+  detail    FoodDetail?
+
+  @@index([promptHash])
+}
+
+model FoodCandidate {
+  id                  String   @id @default(cuid())
+  candidateKey         String
+  requestId           String
+  request             FoodRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  namaMakanan         String
+  deskripsiSingkat    String
+  foodImageUrl        String?
+  foodImageSource     String?
+  foodImageMatchScore Int?
+  createdAt           DateTime @default(now())
+
+  @@index([requestId])
+  @@unique([requestId, candidateKey])
+}
+
+model FoodDetail {
+  id              String   @id @default(cuid())
+  requestId       String   @unique
+  request         FoodRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  promptHash       String
+  namaMakanan     String
+  deskripsiDetail String
+  karakterRasa    Json
+  tekstur         String
+  bahanUtama      Json
+  resepBahan      Json
+  langkahMemasak  Json
+  cocokUntuk      String
+  deskripsiVisual String
+  videoAsset      VideoAsset?
+
+  @@index([requestId])
+  @@index([namaMakanan])
+  @@index([promptHash])
+}
+
+model VideoAsset {
+  id          String   @id @default(cuid())
+  detailId    String   @unique
+  detail      FoodDetail @relation(fields: [detailId], references: [id], onDelete: Cascade)
+  jobId       String?
+  videoPath   String?
+  videoUrl    String?
+  status      VideoStatus @default(PENDING)
+  promptHash  String
+  provider    String   @default("pixverse")
+  errorMessage String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([promptHash])
+  @@index([status])
+}
+
+enum VideoStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
